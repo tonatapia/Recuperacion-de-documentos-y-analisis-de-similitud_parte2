@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 import sys
+import math
 
-documento_actual = None
-palabras = []
-total_palabras = 0
-
-def calcular_tf(documento, palabras, total):
-    for palabra, frecuencia in palabras:
-        tf = frecuencia / total
-        print(palabra + "\t" + documento + ":" + str(tf))
+documentos = {}
+vocabulario = set()
 
 for linea in sys.stdin:
     linea = linea.strip()
@@ -25,18 +20,37 @@ for linea in sys.stdin:
     palabra = partes[1]
     frecuencia = int(partes[2])
 
-    if documento_actual is None:
-        documento_actual = documento
+    if documento not in documentos:
+        documentos[documento] = {}
 
-    if documento != documento_actual:
-        calcular_tf(documento_actual, palabras, total_palabras)
+    documentos[documento][palabra] = frecuencia
+    vocabulario.add(palabra)
 
-        documento_actual = documento
-        palabras = []
-        total_palabras = 0
+total_documentos = len(documentos)
 
-    palabras.append((palabra, frecuencia))
-    total_palabras += frecuencia
+for palabra in sorted(vocabulario):
+    lista_documentos = []
 
-if documento_actual is not None:
-    calcular_tf(documento_actual, palabras, total_palabras)
+    for documento in documentos:
+        if palabra in documentos[documento]:
+            lista_documentos.append(documento)
+
+    documentos_con_palabra = len(lista_documentos)
+
+    if documentos_con_palabra == 0:
+        continue
+
+    idf = math.log(total_documentos / documentos_con_palabra)
+
+    resultados = []
+
+    for documento in lista_documentos:
+        total_palabras_doc = sum(documentos[documento].values())
+        frecuencia = documentos[documento][palabra]
+
+        tf = frecuencia / total_palabras_doc
+        tfidf = tf * idf
+
+        resultados.append(documento + ":TF=" + str(round(tf, 6)) + ":TFIDF=" + str(round(tfidf, 6)))
+
+    print(palabra + "\tIDF=" + str(round(idf, 6)) + "\t" + ",".join(resultados))
