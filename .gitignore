@@ -1,0 +1,31 @@
+# Editor: VS Code (ignorar carpeta .vscode)
+.vscode/
+
+# Entornos virtuales de Python
+venv/
+env/
+.venv/
+ENV/
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Archivos de caché
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# Variables de entorno locales
+.env
+.env.*
+
+# Archivos de log
+*.log
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+	
