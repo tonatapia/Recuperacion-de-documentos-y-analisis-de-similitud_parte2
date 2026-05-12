@@ -24,11 +24,19 @@ public class CosSim2Mapper extends Mapper<LongWritable, Text, Text, Text> {
         if (cacheFiles == null) return;
 
         for (URI uri : cacheFiles) {
-            BufferedReader br = new BufferedReader(new FileReader(uri.getPath()));
+
+            String localName = new java.io.File(uri.getPath()).getName();
+
+            BufferedReader br = new BufferedReader(
+                new FileReader(localName)
+            );
+
             String line;
+
             while ((line = br.readLine()) != null) {
                 parseLine(line);
             }
+
             br.close();
         }
     }
