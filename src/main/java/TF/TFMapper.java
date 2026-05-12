@@ -1,17 +1,11 @@
-package TFIDF;
+package TF;
 
 import java.io.IOException;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-/**
- * Entrada:  salida del Índice Invertido
- *           "palabra \t numDocs \t docId:freq:total:tf|..."
- * Salida:   pasa directamente la línea sin cambios;
- *           el reducer calcula IDF y TF-IDF.
- */
-public class TFIDFMapper extends Mapper<LongWritable, Text, Text, Text> {
+public class TFMapper extends Mapper<LongWritable, Text, Text, Text> {
 
     private Text outputKey   = new Text();
     private Text outputValue = new Text();
@@ -23,11 +17,16 @@ public class TFIDFMapper extends Mapper<LongWritable, Text, Text, Text> {
         String line = value.toString().trim();
         if (line.isEmpty()) return;
 
-        String[] parts = line.split("\t", 3);
+        String[] parts = line.split("\t");
         if (parts.length != 3) return;
 
-        outputKey.set(parts[0]);                    // palabra
-        outputValue.set(parts[1] + "\t" + parts[2]); // numDocs\tposting
+        String docId     = parts[0];
+        String palabra   = parts[1];
+        String frecuencia = parts[2];
+
+        // Agrupamos por docId para que el reducer conozca todas las palabras
+        outputKey.set(docId);
+        outputValue.set(palabra + ":" + frecuencia);
         context.write(outputKey, outputValue);
     }
 }

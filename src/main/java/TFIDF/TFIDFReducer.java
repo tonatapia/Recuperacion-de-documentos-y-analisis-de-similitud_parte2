@@ -4,16 +4,6 @@ import java.io.IOException;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-/**
- * Lee el total de documentos desde la configuración (clave "totalDocs").
- * Salida: "palabra \t idf \t numDocs \t posting_con_tfidf"
- *
- * Cada entrada del posting pasa de:
- *   docId:freq:total:tf
- * a:
- *   docId|freq|total|tf|idf|tfidf|titulo   (titulo se agrega vacío aquí;
- *   si tu JSONL tiene título, añádelo al TFMapper)
- */
 public class TFIDFReducer extends Reducer<Text, Text, Text, Text> {
 
     private int totalDocs = 1;
@@ -27,7 +17,6 @@ public class TFIDFReducer extends Reducer<Text, Text, Text, Text> {
     protected void reduce(Text key, Iterable<Text> values, Context context)
             throws IOException, InterruptedException {
 
-        // Solo debe llegar 1 valor por palabra (el mapper lo emite así)
         String data = "";
         for (Text val : values) {
             data = val.toString();
@@ -52,7 +41,6 @@ public class TFIDFReducer extends Reducer<Text, Text, Text, Text> {
             String total      = campos[2];
             double tf         = Double.parseDouble(campos[3]);
             double tfidf      = tf * idf;
-            // título vacío por defecto; cámbialo si propagas el título desde BagOfWords
             String titulo = campos.length >= 5 ? campos[4] : "";
 
             if (newPosting.length() > 0) newPosting.append(";");

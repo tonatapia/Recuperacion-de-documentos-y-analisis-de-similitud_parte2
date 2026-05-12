@@ -10,20 +10,10 @@ import java.util.List;
  *
  * Uso:
  *   java ConsultaDocumentos <termino>
- *
- * Archivos esperados en salidas_locales/:
- *   tf_idf.txt   — salida del job TF-IDF
- *   similitud.txt — salida del job Cosine Similarity
- *
- * Formato tf_idf.txt (una línea por palabra):
- *   palabra \t idf \t numDocs \t docId|freq|total|tf|idf|tfidf|titulo;...
- *
- * Formato similitud.txt (una línea por par):
- *   docA \t docB \t coseno \t tituloA \t tituloB
  */
 public class ConsultaDocumentos {
 
-    // ------------------------------------------------------------------ modelos
+    //  modelos
 
     static class DocumentoTermino {
         String docId;
@@ -59,7 +49,7 @@ public class ConsultaDocumentos {
         }
     }
 
-    // ------------------------------------------------------------------ utilidades
+    // utilidades
 
     /** Convierte a minúsculas y elimina acentos */
     static String normalizar(String texto) {
@@ -76,17 +66,11 @@ public class ConsultaDocumentos {
         System.out.println(sb.toString());
     }
 
-    // ------------------------------------------------------------------ lectura TF-IDF
+    // lectura TF-IDF
 
-    /**
-     * Lee tf_idf.txt y devuelve todos los documentos que contienen el término.
-     *
-     * Formato de cada línea:
-     *   palabra \t idf \t numDocs \t posting
-     *
-     * Formato de cada entrada en el posting (separadas por ';'):
-     *   docId|freq|total|tf|idf|tfidf|titulo
-     */
+
+    // Lee tf_idf.txt y devuelve todos los documentos que contienen el término.
+
     static List<DocumentoTermino> buscarTermino(String termino, String archivo) {
 
         List<DocumentoTermino> resultado = new ArrayList<>();
@@ -132,14 +116,8 @@ public class ConsultaDocumentos {
         return resultado;
     }
 
-    // ------------------------------------------------------------------ lectura similitud
+    // lectura similitud
 
-    /**
-     * Lee similitud.txt y devuelve los documentos similares al docId dado.
-     *
-     * Formato de cada línea:
-     *   docA \t docB \t coseno \t tituloA \t tituloB
-     */
     static List<DocumentoSimilar> buscarSimilares(String docIdBase, String archivo) {
 
         List<DocumentoSimilar> similares = new ArrayList<>();
@@ -172,7 +150,7 @@ public class ConsultaDocumentos {
         return similares;
     }
 
-    // ------------------------------------------------------------------ verificación
+    //  verificación
 
     /**
      * Verifica que cada documento similar comparta al menos una palabra
@@ -209,22 +187,22 @@ public class ConsultaDocumentos {
         return compartidas;
     }
 
-    // ------------------------------------------------------------------ etiqueta similitud
+    //  etiqueta similitud
 
     /** Devuelve una etiqueta descriptiva del nivel de similitud */
     static String etiquetaSimilitud(double coseno) {
-        if (coseno >= 0.80) return "MUY ALTA  ████████";
-        if (coseno >= 0.60) return "ALTA      ██████░░";
-        if (coseno >= 0.40) return "MEDIA     ████░░░░";
-        if (coseno >= 0.20) return "BAJA      ██░░░░░░";
-        return                     "MUY BAJA  █░░░░░░░";
+        if (coseno >= 0.80) return "MUY ALTA  ";
+        if (coseno >= 0.60) return "ALTA      ";
+        if (coseno >= 0.40) return "MEDIA     ";
+        if (coseno >= 0.20) return "BAJA      ";
+        return                     "MUY BAJA  ";
     }
 
-    // ------------------------------------------------------------------ main
+    // main
 
     public static void main(String[] args) {
 
-        // ── validar argumentos ──────────────────────────────────────────────
+        // validar argumentos 
         if (args.length < 1) {
             System.out.println("Uso: java ConsultaDocumentos <termino>");
             System.out.println("Ejemplo: java ConsultaDocumentos mexico");
@@ -236,7 +214,7 @@ public class ConsultaDocumentos {
         String archivoSimilitud = "salidas_locales/similitud.txt";
         int    topSimilares   = 10; // cuántos documentos similares mostrar
 
-        // ── encabezado ──────────────────────────────────────────────────────
+        // encabezado
         linea('=', 65);
         System.out.println("  SISTEMA DE CONSULTA DE DOCUMENTOS SIMILARES");
         System.out.println("  IPN UPIIT — Big Data");
@@ -246,7 +224,7 @@ public class ConsultaDocumentos {
         System.out.println("  Archivo similitud  : " + archivoSimilitud);
         linea('-', 65);
 
-        // ── paso 1: buscar documentos que contienen el término ──────────────
+        // paso 1: buscar documentos que contienen el término 
         System.out.println("\n[1/3] Buscando documentos con el término \"" + termino + "\"...");
         List<DocumentoTermino> documentos = buscarTermino(termino, archivoTFIDF);
 
@@ -259,7 +237,7 @@ public class ConsultaDocumentos {
 
         System.out.println("  Documentos encontrados: " + documentos.size());
 
-        // ── paso 2: ordenar por frecuencia y mostrar top 5 ──────────────────
+        // paso 2: ordenar por frecuencia y mostrar top 5
         Collections.sort(documentos,
             (a, b) -> Integer.compare(b.frecuencia, a.frecuencia));
 
@@ -278,7 +256,7 @@ public class ConsultaDocumentos {
                 d.titulo.isEmpty() ? "(sin título)" : d.titulo);
         }
 
-        // ── documento base = mayor frecuencia ───────────────────────────────
+        // documento base = mayor frecuencia 
         DocumentoTermino base = documentos.get(0);
 
         linea('-', 65);
@@ -292,7 +270,7 @@ public class ConsultaDocumentos {
         System.out.printf ("    IDF      : %.6f%n", base.idf);
         System.out.printf ("    TF-IDF   : %.6f%n", base.tfidf);
 
-        // ── paso 3: buscar y mostrar documentos similares ───────────────────
+        // paso 3: buscar y mostrar documentos similares
         System.out.println("\n[3/3] Buscando documentos similares al documento base...");
         List<DocumentoSimilar> similares = buscarSimilares(base.docId, archivoSimilitud);
 
@@ -334,7 +312,7 @@ public class ConsultaDocumentos {
             }
         }
 
-        // ── resumen final ────────────────────────────────────────────────────
+        // resumen final 
         linea('=', 65);
         System.out.printf("%nResumen:%n");
         System.out.println("  Término buscado       : " + termino);

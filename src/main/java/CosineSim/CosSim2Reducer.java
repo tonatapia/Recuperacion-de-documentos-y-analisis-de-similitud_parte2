@@ -4,10 +4,6 @@ import java.io.IOException;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-/**
- * Toma el máximo coseno si hubiera duplicados (no debería haberlos).
- * Salida final: "docA \t docB \t coseno \t tituloA \t tituloB"
- */
 public class CosSim2Reducer extends Reducer<Text, Text, Text, Text> {
 
     @Override

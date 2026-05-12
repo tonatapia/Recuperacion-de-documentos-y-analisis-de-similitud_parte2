@@ -29,7 +29,6 @@ public class TFReducer extends Reducer<Text, Text, Text, Text> {
             int    frecuencia = Integer.parseInt(par[1]);
             double tf         = (double) frecuencia / totalPalabras;
 
-            // clave: "palabra\tdocId"   valor: "frecuencia\ttotalPalabras\ttf"
             context.write(
                 new Text(palabra + "\t" + docId),
                 new Text(frecuencia + "\t" + totalPalabras + "\t" + String.format("%.6f", tf))

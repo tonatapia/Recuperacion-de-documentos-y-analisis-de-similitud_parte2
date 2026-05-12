@@ -5,11 +5,6 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-/**
- * Entrada:  salida TF-IDF
- *   "palabra \t idf \t numDocs \t docId|freq|total|tf|idf|tfidf|titulo;..."
- * Salida:   clave=docId   valor="palabra:tfidf"
- */
 public class CosSim1Mapper extends Mapper<LongWritable, Text, Text, Text> {
 
     @Override

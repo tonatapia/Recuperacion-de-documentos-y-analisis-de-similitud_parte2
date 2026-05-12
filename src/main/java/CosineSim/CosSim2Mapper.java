@@ -12,16 +12,9 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-/**
- * Usa el Distributed Cache para cargar TODOS los vectores de documentos.
- * Por cada documento del input calcula coseno con los documentos del cache
- * y emite los pares con similitud > 0.
- *
- * Salida: "docA\tdocB"  →  "tituloA\ttituloB\tcoseno"
- */
 public class CosSim2Mapper extends Mapper<LongWritable, Text, Text, Text> {
 
-    // docId → { palabra → tfidf }
+    // docId  { palabra tfidf }
     private Map<String, Map<String, Double>> allVectors = new HashMap<>();
     private Map<String, String> allTitulos = new HashMap<>();
 

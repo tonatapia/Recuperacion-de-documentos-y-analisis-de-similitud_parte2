@@ -5,10 +5,6 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-/**
- * Entrada:  salida de TF  →  "palabra\tdocId \t frecuencia\ttotal\ttf"
- * Salida:   clave="palabra"   valor="docId:frecuencia:total:tf"
- */
 public class IndiceInvertidoMapper extends Mapper<LongWritable, Text, Text, Text> {
 
     private Text outputKey   = new Text();

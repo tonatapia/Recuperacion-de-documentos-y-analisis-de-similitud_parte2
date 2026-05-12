@@ -17,7 +17,7 @@ public class CosineSimDriver {
             System.exit(-1);
         }
 
-        // --- Job 1: construir vectores por documento ---
+        //Job 1: construir vectores por documento
         Configuration conf1 = new Configuration();
         Job job1 = Job.getInstance(conf1, "Cosine Sim - Build Vectors");
         job1.setJarByClass(CosineSimDriver.class);
@@ -29,7 +29,7 @@ public class CosineSimDriver {
         FileOutputFormat.setOutputPath(job1, new Path(args[1]));
         if (!job1.waitForCompletion(true)) System.exit(1);
 
-        // --- Job 2: calcular pares de similitud ---
+        //Job 2: calcular pares de similitud
         Configuration conf2 = new Configuration();
         Job job2 = Job.getInstance(conf2, "Cosine Sim - Pairwise");
         job2.setJarByClass(CosineSimDriver.class);

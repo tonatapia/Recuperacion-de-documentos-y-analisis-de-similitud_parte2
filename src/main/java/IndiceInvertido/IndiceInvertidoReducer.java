@@ -4,10 +4,7 @@ import java.io.IOException;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-/**
- * Entrada:  palabra  →  [docId:freq:total:tf, ...]
- * Salida:   "palabra \t numDocs \t docId:freq:total:tf|docId:freq:total:tf|..."
- */
+
 public class IndiceInvertidoReducer extends Reducer<Text, Text, Text, Text> {
 
     @Override
@@ -23,7 +20,6 @@ public class IndiceInvertidoReducer extends Reducer<Text, Text, Text, Text> {
             numDocs++;
         }
 
-        // clave: palabra   valor: "numDocs\tposting_list"
         context.write(key, new Text(numDocs + "\t" + postingList.toString()));
     }
 }
