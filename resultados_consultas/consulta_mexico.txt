@@ -1,0 +1,101 @@
+=================================================================
+  SISTEMA DE CONSULTA DE DOCUMENTOS SIMILARES
+  IPN UPIIT — Big Data
+=================================================================
+  Término consultado : mexico
+  Archivo TF-IDF     : salidas_locales/tf_idf.txt
+  Archivo similitud  : salidas_locales/similitud.txt
+-----------------------------------------------------------------
+
+[1/3] Buscando documentos con el término "mexico"...
+  Documentos encontrados: 94
+
+[2/3] Ranking de documentos por frecuencia del término:
+-----------------------------------------------------------------
+  #    DOC-ID       FREQ   TF         TF-IDF    
+-----------------------------------------------------------------
+  1    doc077       16     0,0285     0,0215    
+       Título: (sin título)
+  2    doc088       12     0,0361     0,0273    
+       Título: (sin título)
+  3    doc175       8      0,0176     0,0133    
+       Título: (sin título)
+  4    doc153       7      0,0223     0,0168    
+       Título: (sin título)
+  5    doc099       7      0,0203     0,0153    
+       Título: (sin título)
+-----------------------------------------------------------------
+
+  ★ DOCUMENTO BASE (mayor ocurrencia)
+    ID       : doc077
+    Título   : (sin título)
+    Frecuencia: 16 / 562 palabras
+    TF       : 0,028470
+    IDF      : 0,755023
+    TF-IDF   : 0,021495
+
+[3/3] Buscando documentos similares al documento base...
+=================================================================
+  DOCUMENTOS MÁS SIMILARES — Top 10
+  Base: doc077 | (sin título)
+=================================================================
+
+  1. doc119
+     Título     : (sin título)
+     Similitud  : 0,1558  [MUY BAJA  ]
+     Palabras en común (verificación): 39
+
+  2. doc194
+     Título     : (sin título)
+     Similitud  : 0,1416  [MUY BAJA  ]
+     Palabras en común (verificación): 52
+
+  3. doc197
+     Título     : (sin título)
+     Similitud  : 0,1307  [MUY BAJA  ]
+     Palabras en común (verificación): 54
+
+  4. doc175
+     Título     : (sin título)
+     Similitud  : 0,1134  [MUY BAJA  ]
+     Palabras en común (verificación): 49
+
+  5. doc106
+     Título     : (sin título)
+     Similitud  : 0,1125  [MUY BAJA  ]
+     Palabras en común (verificación): 56
+
+  6. doc086
+     Título     : (sin título)
+     Similitud  : 0,0929  [MUY BAJA  ]
+     Palabras en común (verificación): 47
+
+  7. doc099
+     Título     : (sin título)
+     Similitud  : 0,0929  [MUY BAJA  ]
+     Palabras en común (verificación): 69
+
+  8. doc082
+     Título     : (sin título)
+     Similitud  : 0,0912  [MUY BAJA  ]
+     Palabras en común (verificación): 62
+
+  9. doc139
+     Título     : (sin título)
+     Similitud  : 0,0892  [MUY BAJA  ]
+     Palabras en común (verificación): 27
+
+  10. doc169
+     Título     : (sin título)
+     Similitud  : 0,0844  [MUY BAJA  ]
+     Palabras en común (verificación): 38
+=================================================================
+
+Resumen:
+  Término buscado       : mexico
+  Documento base        : doc077
+  Docs con el término   : 94
+  Docs similares totales: 192
+  Mostrando top         : 10
+  Similitud promedio    : 0,1105
+=================================================================
